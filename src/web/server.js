@@ -179,8 +179,8 @@ function startWeb() {
     res.sendFile(path.join(__dirname, 'index.html'));
   });
 
-  app.listen(config.WEB_PORT, () => {
-    console.log(`Admin panel running at http://localhost:${config.WEB_PORT}`);
+  app.listen(config.WEB_PORT, '0.0.0.0', () => {
+    console.log(`Admin panel running at http://0.0.0.0:${config.WEB_PORT}`);
   });
 }
 
