@@ -9,6 +9,7 @@
   "dependencies": {
     "sql.js": "^1.10.0",
     "dotenv": "^16.4.0",
+    "express": "^4.21.0",
     "node-telegram-bot-api": "^0.66.0",
     "xlsx": "^0.18.5"
   }

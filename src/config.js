@@ -14,4 +14,5 @@ module.exports = {
   ADMIN_USERNAME: process.env.ADMIN_USERNAME,
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD,
   DB_PATH: path.resolve(__dirname, '..', 'data', 'sites.db'),
+  WEB_PORT: parseInt(process.env.WEB_PORT || '3000'),
 };

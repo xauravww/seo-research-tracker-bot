@@ -6,6 +6,10 @@ const db = require('./database');
 async function main() {
   await db.init();
 
+  // Start web admin panel
+  const { startWeb } = require('./web/server');
+  startWeb();
+
   const bot = new TelegramBot(config.BOT_TOKEN, { polling: true });
 
   const commands = require('./handlers/commands');

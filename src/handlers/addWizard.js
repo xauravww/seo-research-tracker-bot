@@ -137,21 +137,26 @@ function handleWizardCallback(bot, chatId, messageId, callbackData) {
   if (step === 'confirm') {
     if (callbackData === 'confirm_yes') {
       try {
-        const result = db.addSite({
+        const siteData = {
           url: data.url,
           domain: data.domain,
           category: data.category,
-          is_working: data.is_working,
-          login_works: data.login_works ?? null,
-          signup_works: data.signup_works ?? null,
-          create_content_works: data.create_content_works ?? null,
-          requires_approval: data.requires_approval ?? null,
-          credentials: data.credentials || null,
-          notes: data.notes || null,
-        });
+          is_working: data.is_working != null ? data.is_working : 1,
+          login_works: data.login_works != null ? data.login_works : null,
+          signup_works: data.signup_works != null ? data.signup_works : null,
+          create_content_works: data.create_content_works != null ? data.create_content_works : null,
+          requires_approval: data.requires_approval != null ? data.requires_approval : null,
+          credentials: data.credentials && data.credentials !== '' ? data.credentials : null,
+          notes: data.notes && data.notes !== '' ? data.notes : null,
+        };
+        const result = db.addSite(siteData);
         wizardState.delete(chatId);
         const site = db.getSiteById(result.lastInsertRowid);
-        bot.sendMessage(chatId, `Site added successfully!\n\n${formatSiteDetails(site)}`, { parse_mode: 'Markdown' });
+        if (site) {
+          bot.sendMessage(chatId, `Site added successfully!\n\n${formatSiteDetails(site)}`, { parse_mode: 'Markdown' });
+        } else {
+          bot.sendMessage(chatId, 'Site added successfully!');
+        }
       } catch (err) {
         wizardState.delete(chatId);
         if (err.message.includes('UNIQUE constraint failed')) {
