@@ -27,6 +27,7 @@ function formatSiteDetails(site) {
     `*Signup works:* ${boolLabel(site.signup_works)}`,
     `*Create content:* ${boolLabel(site.create_content_works)}`,
     `*Requires approval:* ${boolLabel(site.requires_approval)}`,
+    `*Published:* ${boolLabel(site.is_published)}`,
     `*Credentials:*\n${creds}`,
     `*Notes:* ${site.notes || 'None'}`,
     `*Created:* ${site.created_at}`,

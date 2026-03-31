@@ -123,6 +123,7 @@ function sendExcel(bot, chatId, sites, filename) {
     'Signup Works': boolLabel(s.signup_works),
     'Create Content': boolLabel(s.create_content_works),
     'Requires Approval': boolLabel(s.requires_approval),
+    'Published': boolLabel(s.is_published),
     'Credentials': s.credentials || '',
     'Notes': s.notes || '',
     'Created': s.created_at,

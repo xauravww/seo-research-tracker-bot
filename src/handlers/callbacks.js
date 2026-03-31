@@ -73,7 +73,7 @@ function register(bot) {
         const id = parseInt(parts[0]);
         const field = parts.slice(1).join('_');
 
-        const boolFields = ['is_working', 'login_works', 'signup_works', 'create_content_works', 'requires_approval'];
+        const boolFields = ['is_working', 'login_works', 'signup_works', 'create_content_works', 'requires_approval', 'is_published'];
         if (boolFields.includes(field)) {
           const buttons = [
             [

@@ -104,6 +104,14 @@ function handleWizardCallback(bot, chatId, messageId, callbackData) {
 
   if (step === 'requires_approval') {
     data.requires_approval = parseYesNoUnknown(callbackData, 'approval');
+    state.step = 'is_published';
+    wizardState.set(chatId, state);
+    sendYesNoNa(bot, chatId, 'Has this site been published?', 'published');
+    return;
+  }
+
+  if (step === 'is_published') {
+    data.is_published = parseYesNoNa(callbackData, 'published');
     state.step = 'credentials';
     wizardState.set(chatId, state);
     bot.sendMessage(chatId, 'Enter credentials as key:value pairs (e.g. `email:test@test.com, password:abc123`)\nOr press Skip:', {
@@ -146,6 +154,7 @@ function handleWizardCallback(bot, chatId, messageId, callbackData) {
           signup_works: data.signup_works != null ? data.signup_works : null,
           create_content_works: data.create_content_works != null ? data.create_content_works : null,
           requires_approval: data.requires_approval != null ? data.requires_approval : null,
+          is_published: data.is_published != null ? data.is_published : null,
           credentials: data.credentials && data.credentials !== '' ? data.credentials : null,
           notes: data.notes && data.notes !== '' ? data.notes : null,
         };
@@ -299,6 +308,7 @@ function sendConfirmation(bot, chatId, data) {
     `Signup: ${boolLabel(data.signup_works)}`,
     `Create content: ${boolLabel(data.create_content_works)}`,
     `Requires approval: ${boolLabel(data.requires_approval)}`,
+    `Published: ${boolLabel(data.is_published)}`,
     `Credentials: ${data.credentials || 'None'}`,
     `Notes: ${data.notes || 'None'}`,
   ];

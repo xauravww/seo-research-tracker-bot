@@ -28,12 +28,22 @@ async function init() {
       signup_works INTEGER DEFAULT NULL,
       create_content_works INTEGER DEFAULT NULL,
       requires_approval INTEGER DEFAULT NULL,
+      is_published INTEGER DEFAULT NULL,
       credentials TEXT DEFAULT NULL,
       notes TEXT DEFAULT NULL,
       created_at TEXT DEFAULT CURRENT_TIMESTAMP,
       updated_at TEXT DEFAULT CURRENT_TIMESTAMP
     )
   `);
+
+  // Migrate: add is_published column if missing
+  try {
+    const cols = all("PRAGMA table_info(sites)");
+    if (!cols.some(c => c.name === 'is_published')) {
+      db.run("ALTER TABLE sites ADD COLUMN is_published INTEGER DEFAULT NULL");
+    }
+  } catch {}
+
   save();
 }
 
@@ -72,9 +82,9 @@ function all(sql, params = []) {
 
 function addSite(data) {
   run(
-    `INSERT INTO sites (url, domain, category, is_working, login_works, signup_works, create_content_works, requires_approval, credentials, notes)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [data.url, data.domain, data.category, data.is_working, data.login_works, data.signup_works, data.create_content_works, data.requires_approval, data.credentials, data.notes]
+    `INSERT INTO sites (url, domain, category, is_working, login_works, signup_works, create_content_works, requires_approval, is_published, credentials, notes)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+    [data.url, data.domain, data.category, data.is_working, data.login_works, data.signup_works, data.create_content_works, data.requires_approval, data.is_published != null ? data.is_published : null, data.credentials, data.notes]
   );
   const row = get('SELECT last_insert_rowid() as id');
   return { lastInsertRowid: row.id };
@@ -93,11 +103,43 @@ function searchSites(query) {
   return all('SELECT * FROM sites WHERE domain LIKE ? OR url LIKE ?', [pattern, pattern]);
 }
 
-function listSites(page = 1, perPage = 10) {
+function listSites(page = 1, perPage = 10, options = {}) {
+  const { search, category, status, published, sortBy = 'id', sortOrder = 'DESC' } = options;
+  const allowedSort = ['id', 'domain', 'category', 'created_at', 'updated_at'];
+  const col = allowedSort.includes(sortBy) ? sortBy : 'id';
+  const dir = sortOrder.toUpperCase() === 'ASC' ? 'ASC' : 'DESC';
+
+  let where = [];
+  let params = [];
+
+  if (search) {
+    where.push('(domain LIKE ? OR url LIKE ?)');
+    params.push(`%${search}%`, `%${search}%`);
+  }
+  if (category) {
+    where.push('category = ?');
+    params.push(category);
+  }
+  if (status === 'working') {
+    where.push('is_working = 1');
+  } else if (status === 'down') {
+    where.push('is_working = 0');
+  }
+  if (published === 'yes') {
+    where.push('is_published = 1');
+  } else if (published === 'no') {
+    where.push('is_published = 0');
+  } else if (published === 'na') {
+    where.push('is_published IS NULL');
+  }
+
+  const whereClause = where.length ? 'WHERE ' + where.join(' AND ') : '';
+  const countRow = get(`SELECT COUNT(*) as count FROM sites ${whereClause}`, params);
+  const count = countRow ? countRow.count : 0;
+
   const offset = (page - 1) * perPage;
-  const sites = all('SELECT id, url, domain, category, is_working FROM sites ORDER BY id DESC LIMIT ? OFFSET ?', [perPage, offset]);
-  const row = get('SELECT COUNT(*) as count FROM sites');
-  const count = row ? row.count : 0;
+  const sites = all(`SELECT * FROM sites ${whereClause} ORDER BY ${col} ${dir} LIMIT ? OFFSET ?`, [...params, perPage, offset]);
+
   return { sites, total: count, page, totalPages: Math.ceil(count / perPage) };
 }
 
@@ -106,8 +148,8 @@ function updateSite(id, data) {
   if (!existing) return null;
   const merged = { ...existing, ...data, id };
   run(
-    `UPDATE sites SET url = ?, domain = ?, category = ?, is_working = ?, login_works = ?, signup_works = ?, create_content_works = ?, requires_approval = ?, credentials = ?, notes = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
-    [merged.url, merged.domain, merged.category, merged.is_working, merged.login_works, merged.signup_works, merged.create_content_works, merged.requires_approval, merged.credentials, merged.notes, id]
+    `UPDATE sites SET url = ?, domain = ?, category = ?, is_working = ?, login_works = ?, signup_works = ?, create_content_works = ?, requires_approval = ?, is_published = ?, credentials = ?, notes = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`,
+    [merged.url, merged.domain, merged.category, merged.is_working, merged.login_works, merged.signup_works, merged.create_content_works, merged.requires_approval, merged.is_published != null ? merged.is_published : null, merged.credentials, merged.notes, id]
   );
   return getSiteById(id);
 }
@@ -115,7 +157,7 @@ function updateSite(id, data) {
 function updateSiteField(id, field, value) {
   const allowedFields = [
     'url', 'domain', 'category', 'is_working', 'login_works', 'signup_works',
-    'create_content_works', 'requires_approval', 'credentials', 'notes',
+    'create_content_works', 'requires_approval', 'is_published', 'credentials', 'notes',
   ];
   if (!allowedFields.includes(field)) return null;
   run(`UPDATE sites SET ${field} = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`, [value, id]);
@@ -142,6 +184,21 @@ function getSitesByCategory(category) {
   return all('SELECT * FROM sites WHERE category = ? ORDER BY id', [category]);
 }
 
+function getStats() {
+  const total = get('SELECT COUNT(*) as c FROM sites');
+  const working = get('SELECT COUNT(*) as c FROM sites WHERE is_working = 1');
+  const down = get('SELECT COUNT(*) as c FROM sites WHERE is_working = 0');
+  const published = get('SELECT COUNT(*) as c FROM sites WHERE is_published = 1');
+  const unpublished = get('SELECT COUNT(*) as c FROM sites WHERE is_published = 0');
+  return {
+    total: total ? total.c : 0,
+    working: working ? working.c : 0,
+    down: down ? down.c : 0,
+    published: published ? published.c : 0,
+    unpublished: unpublished ? unpublished.c : 0,
+  };
+}
+
 module.exports = {
   init,
   addSite,
@@ -156,4 +213,5 @@ module.exports = {
   getSitesByDays,
   getSitesByIdRange,
   getSitesByCategory,
+  getStats,
 };

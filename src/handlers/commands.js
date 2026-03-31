@@ -209,6 +209,7 @@ function sendUpdateFieldKeyboard(bot, chatId, id) {
     ['Signup Works', `editfield_${id}_signup_works`],
     ['Create Content', `editfield_${id}_create_content_works`],
     ['Requires Approval', `editfield_${id}_requires_approval`],
+    ['Published', `editfield_${id}_is_published`],
     ['Credentials', `editfield_${id}_credentials`],
     ['Notes', `editfield_${id}_notes`],
   ];

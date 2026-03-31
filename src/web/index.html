@@ -5,172 +5,236 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEO Research Tracker</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#09090b;--surface:#18181b;--surface2:#27272a;--border:#3f3f46;
-  --primary:#6366f1;--primary-hover:#4f46e5;--primary-soft:rgba(99,102,241,.12);
-  --danger:#f43f5e;--danger-hover:#e11d48;--danger-soft:rgba(244,63,94,.12);
-  --success:#10b981;--success-soft:rgba(16,185,129,.12);
+  --bg:#0a0a0f;--bg2:#101018;--surface:#16161e;--surface2:#1e1e2a;--surface3:#262636;
+  --border:#2a2a3a;--border2:#363648;
+  --primary:#7c3aed;--primary-hover:#6d28d9;--primary-soft:rgba(124,58,237,.15);--primary-glow:rgba(124,58,237,.25);
+  --accent:#a78bfa;
+  --danger:#ef4444;--danger-hover:#dc2626;--danger-soft:rgba(239,68,68,.12);
+  --success:#22c55e;--success-soft:rgba(34,197,94,.12);
   --warn:#f59e0b;--warn-soft:rgba(245,158,11,.12);
-  --text:#fafafa;--text2:#a1a1aa;--text3:#71717a;
-  --radius:10px;--radius-sm:6px;--shadow:0 8px 32px rgba(0,0,0,.4)
+  --info:#3b82f6;--info-soft:rgba(59,130,246,.12);
+  --text:#f1f1f6;--text2:#9ca3b0;--text3:#6b7280;
+  --radius:12px;--radius-sm:8px;--radius-xs:6px;
+  --shadow:0 8px 32px rgba(0,0,0,.5);--shadow-sm:0 2px 8px rgba(0,0,0,.3)
 }
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
-a{color:var(--primary);text-decoration:none}a:hover{text-decoration:underline}
-button{cursor:pointer;border:none;border-radius:var(--radius-sm);padding:8px 16px;font-size:13px;font-weight:500;font-family:inherit;transition:all .15s ease}
-input,select,textarea{font-family:inherit;background:var(--bg);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-sm);padding:9px 12px;font-size:13px;width:100%;outline:none;transition:border .2s}
-input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
-input.error,select.error,textarea.error{border-color:var(--danger);box-shadow:0 0 0 3px var(--danger-soft)}
-textarea{resize:vertical;min-height:56px}
-select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23a1a1aa' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
-.field-error{color:var(--danger);font-size:11px;margin-top:3px;display:none}
-.field-error.show{display:block}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:var(--accent);text-decoration:none;transition:color .15s}a:hover{color:#c4b5fd}
+::selection{background:var(--primary-soft);color:var(--text)}
+::-webkit-scrollbar{width:6px;height:6px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}::-webkit-scrollbar-thumb:hover{background:var(--border2)}
 
-.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-hover)}
+button{cursor:pointer;border:none;border-radius:var(--radius-xs);padding:8px 16px;font-size:13px;font-weight:500;font-family:inherit;transition:all .2s ease;outline:none}
+button:focus-visible{box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--primary)}
+input,select,textarea{font-family:inherit;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:var(--radius-xs);padding:10px 14px;font-size:13px;width:100%;outline:none;transition:all .2s}
+input:focus,select:focus,textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+input::placeholder,textarea::placeholder{color:var(--text3)}
+textarea{resize:vertical;min-height:60px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+
+.btn-primary{background:var(--primary);color:#fff;font-weight:600}.btn-primary:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px var(--primary-glow)}
 .btn-danger{background:var(--danger);color:#fff}.btn-danger:hover{background:var(--danger-hover)}
-.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--surface2);color:var(--text)}
-.btn-sm{padding:6px 10px;font-size:12px}
-.btn-icon{padding:6px 8px;display:inline-flex;align-items:center;gap:4px}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border)}.btn-ghost:hover{background:var(--surface2);color:var(--text);border-color:var(--border2)}
+.btn-sm{padding:6px 12px;font-size:12px}
+.btn-xs{padding:4px 8px;font-size:11px}
+.btn-icon{display:inline-flex;align-items:center;gap:5px}
 
 /* Login */
-#login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at top,#1e1b4b 0%,var(--bg) 60%)}
-.login-card{background:var(--surface);padding:36px;border-radius:16px;width:100%;max-width:360px;border:1px solid var(--border);box-shadow:var(--shadow)}
-.login-card .logo{text-align:center;margin-bottom:24px}
-.login-card .logo h1{font-size:20px;font-weight:700;background:linear-gradient(135deg,#818cf8,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.login-card .logo p{color:var(--text3);font-size:13px;margin-top:4px}
-.login-card .field{margin-bottom:14px}
-.login-card .field label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px}
-.login-card button{width:100%;padding:10px;font-size:14px;font-weight:600;margin-top:4px}
+#login-page{display:flex;align-items:center;justify-content:center;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,rgba(124,58,237,.15) 0%,var(--bg) 60%)}
+.login-card{background:var(--surface);padding:40px;border-radius:20px;width:100%;max-width:380px;border:1px solid var(--border);box-shadow:var(--shadow)}
+.login-card .logo{text-align:center;margin-bottom:28px}
+.login-card .logo .logo-icon{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,var(--primary),#a78bfa);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px}
+.login-card .logo h1{font-size:22px;font-weight:800;background:linear-gradient(135deg,#a78bfa,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.login-card .logo p{color:var(--text3);font-size:13px;margin-top:6px}
+.login-card .field{margin-bottom:16px}
+.login-card .field label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px}
+.login-card button[type=submit],.login-card .login-btn{width:100%;padding:12px;font-size:14px;font-weight:700;margin-top:8px;border-radius:var(--radius-sm)}
+.login-error{color:var(--danger);font-size:12px;margin-top:4px;display:none}
+.login-error.show{display:block}
 
 /* App Layout */
 #app{display:none}
-.topbar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
-.topbar-brand{font-size:15px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
-.topbar-brand span{background:linear-gradient(135deg,#818cf8,#6366f1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.topbar-actions{display:flex;gap:6px;align-items:center}
-.container{max-width:1280px;margin:0 auto;padding:24px 28px}
+.topbar{background:rgba(22,22,30,.8);border-bottom:1px solid var(--border);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.topbar-brand{display:flex;align-items:center;gap:10px}
+.topbar-brand .brand-icon{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--primary),#a78bfa);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.topbar-brand span{font-size:15px;font-weight:700;color:var(--text)}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.container{max-width:1440px;margin:0 auto;padding:24px}
 
 /* Stats */
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px}
-.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;transition:border .2s}
-.stat:hover{border-color:var(--primary)}
-.stat .num{font-size:28px;font-weight:700;letter-spacing:-1px}
-.stat .label{font-size:12px;color:var(--text3);margin-top:2px;font-weight:500}
-.stat.purple .num{color:#818cf8}.stat.green .num{color:#10b981}.stat.red .num{color:#f43f5e}.stat.yellow .num{color:#f59e0b}
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;transition:all .25s;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .25s}
+.stat:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:var(--shadow-sm)}
+.stat:hover::before{opacity:1}
+.stat .stat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.stat .stat-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.stat .num{font-size:32px;font-weight:800;letter-spacing:-1.5px;line-height:1}
+.stat .label{font-size:11px;color:var(--text3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.stat.purple .stat-icon{background:var(--primary-soft);color:var(--accent)}.stat.purple::before{background:linear-gradient(90deg,var(--primary),transparent)}.stat.purple .num{color:var(--accent)}
+.stat.green .stat-icon{background:var(--success-soft);color:var(--success)}.stat.green::before{background:linear-gradient(90deg,var(--success),transparent)}.stat.green .num{color:var(--success)}
+.stat.red .stat-icon{background:var(--danger-soft);color:var(--danger)}.stat.red::before{background:linear-gradient(90deg,var(--danger),transparent)}.stat.red .num{color:var(--danger)}
+.stat.blue .stat-icon{background:var(--info-soft);color:var(--info)}.stat.blue::before{background:linear-gradient(90deg,var(--info),transparent)}.stat.blue .num{color:var(--info)}
+.stat.yellow .stat-icon{background:var(--warn-soft);color:var(--warn)}.stat.yellow::before{background:linear-gradient(90deg,var(--warn),transparent)}.stat.yellow .num{color:var(--warn)}
 
 /* Toolbar */
-.toolbar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
-.toolbar .search-box{position:relative;flex:1;min-width:200px;max-width:360px}
-.toolbar .search-box input{padding-left:36px}
-.toolbar .search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3)}
-.toolbar select{width:auto;min-width:160px}
+.toolbar{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.search-box{position:relative;flex:1;min-width:220px;max-width:400px}
+.search-box input{padding-left:40px;background:var(--surface);border-radius:var(--radius-sm)}
+.search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text3);pointer-events:none}
+.toolbar select{width:auto;min-width:150px}
+.toolbar-right{display:flex;gap:8px;align-items:center;margin-left:auto}
 
 /* Table */
-.table-wrap{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:13px;min-width:1100px}
-th{text-align:left;padding:11px 14px;font-weight:600;color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:.6px;background:var(--surface2);white-space:nowrap;border-bottom:1px solid var(--border)}
-td{padding:10px 14px;border-bottom:1px solid rgba(63,63,70,.4);vertical-align:middle}
+.table-wrap{background:var(--surface);border-radius:var(--radius);border:1px solid var(--border);overflow:hidden}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;padding:12px 16px;font-weight:600;color:var(--text3);font-size:11px;text-transform:uppercase;letter-spacing:.6px;background:var(--surface2);white-space:nowrap;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;transition:color .15s}
+th:hover{color:var(--text)}
+th .sort-icon{display:inline-block;margin-left:4px;opacity:.3;transition:opacity .15s;font-size:10px}
+th.sorted .sort-icon{opacity:1;color:var(--accent)}
+th:last-child{cursor:default}
+td{padding:11px 16px;border-bottom:1px solid rgba(42,42,58,.5);vertical-align:middle;white-space:nowrap}
 tr:last-child td{border-bottom:none}
-tr:hover td{background:rgba(99,102,241,.03)}
+tr{transition:background .15s}
+tr:hover td{background:rgba(124,58,237,.03)}
 .domain-cell{font-weight:600;color:var(--text)}
-.url-cell{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text2);font-size:12px}
-.url-cell a{color:var(--text2)}.url-cell a:hover{color:var(--primary)}
-.date-cell{font-size:11px;color:var(--text3);white-space:nowrap}
+.url-cell{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.url-cell a{color:var(--text2);font-size:12px}.url-cell a:hover{color:var(--accent)}
+.date-cell{font-size:11px;color:var(--text3)}
+.id-cell{color:var(--text3);font-size:12px;font-weight:500}
 
-.pill{display:inline-flex;align-items:center;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.3px}
+/* Pills */
+.pill{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.2px;gap:4px}
 .pill-green{background:var(--success-soft);color:var(--success)}
 .pill-red{background:var(--danger-soft);color:var(--danger)}
-.pill-gray{background:rgba(113,113,122,.15);color:var(--text3)}
-.pill-blue{background:var(--primary-soft);color:#818cf8}
+.pill-gray{background:rgba(107,114,128,.12);color:var(--text3)}
+.pill-purple{background:var(--primary-soft);color:var(--accent)}
+.pill-blue{background:var(--info-soft);color:var(--info)}
 .pill-yellow{background:var(--warn-soft);color:var(--warn)}
+.pill-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pill-green .pill-dot{background:var(--success)}.pill-red .pill-dot{background:var(--danger)}.pill-gray .pill-dot{background:var(--text3)}
 
-.actions-cell{display:flex;gap:3px;white-space:nowrap;flex-shrink:0}
+.actions-cell{display:flex;gap:4px;justify-content:flex-end}
+.act-btn{width:30px;height:30px;border-radius:var(--radius-xs);display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--text3);border:1px solid transparent;transition:all .15s;padding:0}
+.act-btn:hover{background:var(--surface2);color:var(--text);border-color:var(--border)}
+.act-btn.danger:hover{background:var(--danger-soft);color:var(--danger);border-color:rgba(239,68,68,.2)}
 
 /* Pagination */
-.pager{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding:0 4px}
+.pager{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-top:1px solid var(--border)}
 .pager-info{font-size:12px;color:var(--text3)}
 .pager-btns{display:flex;gap:2px}
-.pager-btns button{min-width:32px;height:32px;padding:0 8px;font-size:12px;border-radius:var(--radius-sm);background:transparent;color:var(--text2);border:1px solid transparent}
-.pager-btns button:hover{background:var(--surface2);color:var(--text)}
-.pager-btns button.active{background:var(--primary);color:#fff;border-color:var(--primary)}
-.pager-btns button:disabled{opacity:.3;cursor:default}
+.pager-btns button{min-width:34px;height:34px;padding:0;font-size:12px;border-radius:var(--radius-xs);background:transparent;color:var(--text2);border:1px solid transparent;font-weight:500}
+.pager-btns button:hover:not(:disabled){background:var(--surface2);color:var(--text)}
+.pager-btns button.active{background:var(--primary);color:#fff;border-color:var(--primary);font-weight:600}
+.pager-btns button:disabled{opacity:.25;cursor:default}
 
 /* Modal */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(4px);z-index:200;align-items:flex-start;justify-content:center;padding:40px 16px;overflow-y:auto}
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:200;align-items:flex-start;justify-content:center;padding:48px 16px;overflow-y:auto}
 .overlay.open{display:flex}
-.modal{background:var(--surface);border:1px solid var(--border);border-radius:14px;width:100%;max-width:540px;box-shadow:var(--shadow);animation:modalIn .2s ease}
-@keyframes modalIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
-.modal-header{padding:20px 24px 0;display:flex;align-items:center;justify-content:space-between}
-.modal-header h2{font-size:16px;font-weight:700}
-.modal-close{background:none;border:none;color:var(--text3);font-size:20px;cursor:pointer;padding:4px 8px;border-radius:4px}.modal-close:hover{background:var(--surface2);color:var(--text)}
-.modal-body{padding:16px 24px}
-.modal-footer{padding:12px 24px 20px;display:flex;gap:8px;justify-content:flex-end}
-.field{margin-bottom:12px}
-.field label{display:block;font-size:12px;font-weight:500;color:var(--text2);margin-bottom:5px}
-.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:560px;box-shadow:var(--shadow);animation:modalIn .25s cubic-bezier(.4,0,.2,1)}
+@keyframes modalIn{from{opacity:0;transform:translateY(-16px) scale(.98)}to{opacity:1;transform:none}}
+.modal-header{padding:24px 24px 0;display:flex;align-items:center;justify-content:space-between}
+.modal-header h2{font-size:18px;font-weight:700}
+.modal-close{background:var(--surface2);border:none;color:var(--text3);font-size:18px;cursor:pointer;padding:0;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:all .15s}.modal-close:hover{background:var(--surface3);color:var(--text)}
+.modal-body{padding:20px 24px}
+.modal-footer{padding:16px 24px 24px;display:flex;gap:8px;justify-content:flex-end;border-top:1px solid var(--border)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field-error{color:var(--danger);font-size:11px;margin-top:4px;display:none}
+.field-error.show{display:block}
 
 /* Credential pairs */
-.cred-pairs{display:flex;flex-direction:column;gap:6px}
-.cred-row{display:flex;gap:6px;align-items:center}
+.cred-pairs{display:flex;flex-direction:column;gap:8px}
+.cred-row{display:flex;gap:8px;align-items:center}
 .cred-row input{flex:1}
-.cred-row .btn-rm{flex-shrink:0;padding:6px 8px;font-size:14px;color:var(--text3)}.cred-row .btn-rm:hover{color:var(--danger)}
-.btn-add-cred{font-size:12px;color:var(--primary);background:none;padding:4px 0;margin-top:2px}.btn-add-cred:hover{text-decoration:underline}
+.cred-row .btn-rm{flex-shrink:0;width:32px;height:32px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:var(--radius-xs);background:transparent;color:var(--text3);border:1px solid var(--border)}.cred-row .btn-rm:hover{color:var(--danger);border-color:rgba(239,68,68,.3);background:var(--danger-soft)}
+.btn-add-cred{font-size:12px;color:var(--accent);background:none;padding:4px 0;margin-top:2px;font-weight:500}.btn-add-cred:hover{color:#c4b5fd}
 
 /* Toggle buttons */
-.toggles{display:flex;gap:3px}
-.toggles button{padding:6px 14px;border:1px solid var(--border);background:var(--bg);color:var(--text3);border-radius:var(--radius-sm);font-size:12px;font-weight:500;transition:all .15s}
+.toggles{display:flex;gap:4px}
+.toggles button{padding:7px 16px;border:1px solid var(--border);background:var(--surface);color:var(--text3);border-radius:var(--radius-xs);font-size:12px;font-weight:600;transition:all .15s}
+.toggles button:hover{border-color:var(--border2);color:var(--text)}
 .toggles button.on{border-color:var(--success);background:var(--success-soft);color:var(--success)}
 .toggles button.off{border-color:var(--danger);background:var(--danger-soft);color:var(--danger)}
-.toggles button.na{border-color:var(--text3);background:rgba(113,113,122,.1);color:var(--text3)}
+.toggles button.na{border-color:var(--text3);background:rgba(107,114,128,.08);color:var(--text3)}
 
 /* View detail */
 .detail-grid{display:grid;gap:1px;background:var(--border);border-radius:var(--radius-sm);overflow:hidden;margin:4px 0}
 .detail-row{display:grid;grid-template-columns:140px 1fr;background:var(--surface)}
-.detail-row .dk{padding:10px 14px;font-size:12px;font-weight:500;color:var(--text3);background:var(--surface2)}
-.detail-row .dv{padding:10px 14px;font-size:13px;word-break:break-all}
-.cred-display{display:flex;flex-direction:column;gap:2px}
-.cred-display .cred-item{display:flex;gap:6px;font-size:12px}.cred-display .cred-key{color:var(--text3);min-width:70px}
+.detail-row .dk{padding:12px 16px;font-size:12px;font-weight:600;color:var(--text3);background:var(--surface2);text-transform:uppercase;letter-spacing:.4px}
+.detail-row .dv{padding:12px 16px;font-size:13px;word-break:break-all}
+.cred-display{display:flex;flex-direction:column;gap:4px}
+.cred-display .cred-item{display:flex;gap:8px;font-size:12px}.cred-display .cred-key{color:var(--text3);min-width:80px;font-weight:500}
 
-/* Custom confirm */
-.confirm-content{text-align:center;padding:8px 0}
-.confirm-content .confirm-icon{width:48px;height:48px;border-radius:50%;background:var(--danger-soft);display:inline-flex;align-items:center;justify-content:center;margin-bottom:12px}
+/* Confirm dialog */
+.confirm-content{text-align:center;padding:12px 0}
+.confirm-content .confirm-icon{width:56px;height:56px;border-radius:50%;background:var(--danger-soft);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px}
 .confirm-content .confirm-icon svg{color:var(--danger)}
-.confirm-content h3{font-size:16px;margin-bottom:6px}
-.confirm-content p{color:var(--text2);font-size:13px;line-height:1.5}
+.confirm-content h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.confirm-content p{color:var(--text2);font-size:13px;line-height:1.6}
 
-/* Custom category input */
-.custom-cat-wrap{display:flex;gap:6px;margin-top:6px;display:none}
+/* Custom category */
+.custom-cat-wrap{display:flex;gap:8px;margin-top:8px;display:none}
 .custom-cat-wrap.show{display:flex}
 .custom-cat-wrap input{flex:1}
 
+/* Export options */
+.export-opts{display:flex;flex-direction:column;gap:6px}
+.export-opt{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;padding:10px 14px;border-radius:var(--radius-sm);transition:all .15s;border:1px solid transparent}
+.export-opt:hover{background:var(--surface2);border-color:var(--border)}
+.export-opt input[type=radio]{accent-color:var(--primary);width:auto;flex-shrink:0}
+.exp-sub{display:none;padding:0 14px 4px 38px}.exp-sub.show{display:block}
+
 /* Toast */
-.toast-container{position:fixed;bottom:20px;right:20px;z-index:400;display:flex;flex-direction:column;gap:6px}
-.toast{padding:12px 18px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:#fff;box-shadow:0 4px 16px rgba(0,0,0,.3);animation:toastIn .3s ease;display:flex;align-items:center;gap:8px}
-.toast.success{background:#059669}.toast.error{background:#e11d48}
-@keyframes toastIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.toast-container{position:fixed;bottom:20px;right:20px;z-index:400;display:flex;flex-direction:column;gap:8px}
+.toast{padding:14px 20px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;color:#fff;box-shadow:var(--shadow);animation:toastIn .3s cubic-bezier(.4,0,.2,1);display:flex;align-items:center;gap:10px;border:1px solid rgba(255,255,255,.1)}
+.toast.success{background:#059669}.toast.error{background:#dc2626}
+@keyframes toastIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
 
 /* Empty state */
-.empty-state{padding:60px 20px;text-align:center;color:var(--text3)}
-.empty-state svg{margin-bottom:12px;opacity:.4}
-.empty-state p{font-size:14px;margin-bottom:4px}
-.empty-state .sub{font-size:12px}
+.empty-state{padding:80px 20px;text-align:center;color:var(--text3)}
+.empty-state .empty-icon{width:64px;height:64px;border-radius:16px;background:var(--surface2);display:inline-flex;align-items:center;justify-content:center;margin-bottom:16px}
+.empty-state h3{font-size:16px;color:var(--text);margin-bottom:6px;font-weight:600}
+.empty-state p{font-size:13px;max-width:300px;margin:0 auto}
 
+/* Responsive */
+@media(max-width:1200px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+}
 @media(max-width:768px){
-  .toolbar{flex-direction:column}.toolbar .search-box{max-width:100%}
-  .field-row{grid-template-columns:1fr}
-  .stats{grid-template-columns:1fr 1fr}
   .container{padding:16px}
-  .detail-row{grid-template-columns:110px 1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .toolbar{flex-direction:column;align-items:stretch}
+  .search-box{max-width:100%}
+  .toolbar-right{margin-left:0;flex-wrap:wrap}
+  .toolbar select{flex:1;min-width:0}
+  .field-row{grid-template-columns:1fr}
+  .detail-row{grid-template-columns:120px 1fr}
+  .topbar{padding:0 16px}
+  .topbar-brand span{font-size:13px}
+  .topbar-actions{gap:4px}
+  .topbar-actions .btn-text{display:none}
+}
+@media(max-width:480px){
+  .stats{grid-template-columns:1fr}
+  .stat{padding:16px}
+  .stat .num{font-size:24px}
 }
 </style>
 </head>
 <body>
 
+<!-- LOGIN PAGE -->
 <div id="login-page">
   <div class="login-card">
     <div class="logo">
+      <div class="logo-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
       <h1>SEO Research Tracker</h1>
       <p>Sign in to manage your sites</p>
     </div>
@@ -181,47 +245,101 @@ tr:hover td{background:rgba(99,102,241,.03)}
     <div class="field">
       <label>Password</label>
       <input type="password" id="l-pass" autocomplete="current-password" placeholder="Enter password">
-      <div class="field-error" id="l-err"></div>
+      <div class="login-error" id="l-err"></div>
     </div>
-    <button class="btn-primary" onclick="doLogin()">Sign In</button>
+    <button class="btn-primary login-btn" onclick="doLogin()">Sign In</button>
   </div>
 </div>
 
+<!-- APP -->
 <div id="app">
   <div class="topbar">
-    <div class="topbar-brand"><span>SEO Research Tracker</span></div>
+    <div class="topbar-brand">
+      <div class="brand-icon">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <span>SEO Research Tracker</span>
+    </div>
     <div class="topbar-actions">
       <button class="btn-primary btn-sm btn-icon" onclick="openAddModal()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-        Add Site
+        <span class="btn-text">Add Site</span>
+      </button>
+      <button class="btn-ghost btn-sm btn-icon" onclick="openBulkMenu()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        <span class="btn-text">Bulk</span>
       </button>
       <button class="btn-ghost btn-sm btn-icon" onclick="openExportModal()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Export
+        <span class="btn-text">Export</span>
       </button>
       <button class="btn-ghost btn-sm" onclick="doLogout()">Logout</button>
     </div>
   </div>
+
   <div class="container">
+    <!-- Stats -->
     <div class="stats" id="stats"></div>
+
+    <!-- Toolbar -->
     <div class="toolbar">
       <div class="search-box">
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
         <input type="text" id="search-input" placeholder="Search by URL or domain...">
       </div>
+      <button class="btn-primary btn-sm btn-icon" onclick="loadSites(1)" id="search-btn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Search
+      </button>
       <select id="cat-filter"><option value="">All Categories</option></select>
+      <select id="status-filter">
+        <option value="">All Status</option>
+        <option value="working">Working</option>
+        <option value="down">Down</option>
+      </select>
+      <select id="published-filter">
+        <option value="">All Published</option>
+        <option value="yes">Published</option>
+        <option value="no">Not Published</option>
+        <option value="na">N/A</option>
+      </select>
+      <div class="toolbar-right">
+        <button class="btn-ghost btn-sm" onclick="clearFilters()" id="clear-filters-btn" style="display:none">Clear Filters</button>
+        <select id="per-page-select" style="min-width:90px">
+          <option value="20">20 / page</option>
+          <option value="50">50 / page</option>
+          <option value="100">100 / page</option>
+        </select>
+      </div>
     </div>
+
+    <!-- Table -->
     <div class="table-wrap">
-      <table>
-        <thead><tr>
-          <th>ID</th><th>Domain</th><th>URL</th><th>Category</th><th>Status</th>
-          <th>Login</th><th>Signup</th><th>Content</th><th>Approval</th>
-          <th>Created</th><th>Updated</th><th style="text-align:right">Actions</th>
-        </tr></thead>
-        <tbody id="sites-table"></tbody>
-      </table>
+      <div class="table-scroll">
+        <table>
+          <thead><tr>
+            <th data-sort="id" class="sorted">ID <span class="sort-icon">&#9660;</span></th>
+            <th data-sort="domain">Domain <span class="sort-icon">&#9650;</span></th>
+            <th>URL</th>
+            <th data-sort="category">Category <span class="sort-icon">&#9650;</span></th>
+            <th>Status</th>
+            <th>Login</th>
+            <th>Signup</th>
+            <th>Content</th>
+            <th>Approval</th>
+            <th>Published</th>
+            <th data-sort="created_at">Created <span class="sort-icon">&#9650;</span></th>
+            <th data-sort="updated_at">Updated <span class="sort-icon">&#9650;</span></th>
+            <th style="text-align:right">Actions</th>
+          </tr></thead>
+          <tbody id="sites-table"></tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <span class="pager-info" id="page-info"></span>
+        <div class="pager-btns" id="page-btns"></div>
+      </div>
     </div>
-    <div class="pager"><span class="pager-info" id="page-info"></span><div class="pager-btns" id="page-btns"></div></div>
   </div>
 </div>
 
@@ -255,7 +373,7 @@ tr:hover td{background:rgba(99,102,241,.03)}
       </div>
       <div class="field-row">
         <div class="field"><label>Requires Approval?</label><div class="toggles" data-field="m-requires_approval"><button onclick="setToggle(this,1)">Yes</button><button onclick="setToggle(this,0)">No</button><button onclick="setToggle(this,null)">Unknown</button></div><input type="hidden" id="m-requires_approval" value=""></div>
-        <div></div>
+        <div class="field"><label>Published?</label><div class="toggles" data-field="m-is_published"><button onclick="setToggle(this,1)">Yes</button><button onclick="setToggle(this,0)">No</button><button onclick="setToggle(this,null)">N/A</button></div><input type="hidden" id="m-is_published" value=""></div>
       </div>
       <div class="field">
         <label>Credentials</label>
@@ -295,8 +413,8 @@ tr:hover td{background:rgba(99,102,241,.03)}
 
 <!-- Delete Confirm Modal -->
 <div class="overlay" id="delete-modal">
-  <div class="modal" style="max-width:400px">
-    <div class="modal-body" style="padding-top:28px">
+  <div class="modal" style="max-width:420px">
+    <div class="modal-body" style="padding-top:32px">
       <div class="confirm-content">
         <div class="confirm-icon">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
@@ -314,7 +432,7 @@ tr:hover td{background:rgba(99,102,241,.03)}
 
 <!-- Export Modal -->
 <div class="overlay" id="export-modal">
-  <div class="modal" style="max-width:440px">
+  <div class="modal" style="max-width:460px">
     <div class="modal-header"><h2>Export to Excel</h2><button class="modal-close" onclick="closeModal('export-modal')">&times;</button></div>
     <div class="modal-body">
       <div class="export-opts">
@@ -322,17 +440,10 @@ tr:hover td{background:rgba(99,102,241,.03)}
         <label class="export-opt"><input type="radio" name="exp" value="days"><span>Last N Days</span></label>
         <div class="exp-sub" id="exp-days"><select id="export-days"><option value="7">Last 7 Days</option><option value="30">Last 30 Days</option><option value="90">Last 90 Days</option></select></div>
         <label class="export-opt"><input type="radio" name="exp" value="id"><span>By ID Range</span></label>
-        <div class="exp-sub" id="exp-id"><input type="number" id="export-from" placeholder="From ID" style="width:45%;display:inline-block"> <input type="number" id="export-to" placeholder="To ID" style="width:45%;display:inline-block"></div>
+        <div class="exp-sub" id="exp-id"><div style="display:flex;gap:8px"><input type="number" id="export-from" placeholder="From ID"><input type="number" id="export-to" placeholder="To ID"></div></div>
         <label class="export-opt"><input type="radio" name="exp" value="category"><span>By Category</span></label>
         <div class="exp-sub" id="exp-cat"><select id="export-category"></select></div>
       </div>
-      <style>
-        .export-opts{display:flex;flex-direction:column;gap:8px}
-        .export-opt{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:14px;padding:8px 12px;border-radius:var(--radius-sm);transition:background .15s}
-        .export-opt:hover{background:var(--surface2)}
-        .export-opt input[type=radio]{accent-color:var(--primary);width:auto}
-        .exp-sub{display:none;padding:0 12px 4px 32px}.exp-sub.show{display:block}
-      </style>
     </div>
     <div class="modal-footer">
       <button class="btn-ghost" onclick="closeModal('export-modal')">Cancel</button>
@@ -344,12 +455,130 @@ tr:hover td{background:rgba(99,102,241,.03)}
   </div>
 </div>
 
+<!-- Bulk Menu Modal -->
+<div class="overlay" id="bulk-menu-modal">
+  <div class="modal" style="max-width:480px">
+    <div class="modal-header"><h2>Bulk Operations</h2><button class="modal-close" onclick="closeModal('bulk-menu-modal')">&times;</button></div>
+    <div class="modal-body">
+      <div class="bulk-options">
+        <div class="bulk-opt" onclick="downloadUploadTemplate()">
+          <div class="bulk-opt-icon" style="background:var(--success-soft);color:var(--success)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          </div>
+          <div class="bulk-opt-info">
+            <div class="bulk-opt-title">Download Upload Template</div>
+            <div class="bulk-opt-desc">Get a blank .xlsx template to fill with new sites</div>
+          </div>
+        </div>
+        <div class="bulk-opt" onclick="triggerBulkUpload()">
+          <div class="bulk-opt-icon" style="background:var(--primary-soft);color:var(--accent)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </div>
+          <div class="bulk-opt-info">
+            <div class="bulk-opt-title">Bulk Upload Sites</div>
+            <div class="bulk-opt-desc">Upload a filled template to add multiple sites at once</div>
+          </div>
+        </div>
+        <div class="bulk-opt" onclick="downloadUpdateTemplate()">
+          <div class="bulk-opt-icon" style="background:var(--info-soft);color:var(--info)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="bulk-opt-info">
+            <div class="bulk-opt-title">Download Update Template</div>
+            <div class="bulk-opt-desc">Get current data as .xlsx to edit and re-upload</div>
+          </div>
+        </div>
+        <div class="bulk-opt" onclick="triggerBulkUpdate()">
+          <div class="bulk-opt-icon" style="background:var(--warn-soft);color:var(--warn)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+          </div>
+          <div class="bulk-opt-info">
+            <div class="bulk-opt-title">Bulk Update Sites</div>
+            <div class="bulk-opt-desc">Upload edited template to update existing sites by ID</div>
+          </div>
+        </div>
+      </div>
+      <input type="file" id="bulk-upload-input" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleBulkFile(event,'upload')">
+      <input type="file" id="bulk-update-input" accept=".xlsx,.xls,.csv" style="display:none" onchange="handleBulkFile(event,'update')">
+    </div>
+  </div>
+</div>
+
+<!-- Bulk Review Modal -->
+<div class="overlay" id="bulk-review-modal">
+  <div class="modal" style="max-width:900px">
+    <div class="modal-header">
+      <h2 id="bulk-review-title">Review Bulk Upload</h2>
+      <button class="modal-close" onclick="closeModal('bulk-review-modal')">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:12px 24px">
+      <div class="bulk-summary" id="bulk-summary"></div>
+      <div class="bulk-actions-bar">
+        <label class="bulk-check-all"><input type="checkbox" id="bulk-check-all" checked onchange="toggleAllBulk(this.checked)"> Select All</label>
+        <div style="display:flex;gap:6px">
+          <button class="btn-ghost btn-xs" onclick="selectBulkByStatus('new')">Select New Only</button>
+          <button class="btn-ghost btn-xs" onclick="selectBulkByStatus('duplicate')">Select Duplicates Only</button>
+        </div>
+      </div>
+      <div class="bulk-table-wrap">
+        <table class="bulk-table">
+          <thead id="bulk-thead"></thead>
+          <tbody id="bulk-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('bulk-review-modal')">Cancel</button>
+      <button class="btn-primary btn-icon" id="bulk-confirm-btn" onclick="confirmBulk()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="bulk-confirm-text">Confirm Upload</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+.bulk-options{display:flex;flex-direction:column;gap:8px}
+.bulk-opt{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:var(--radius-sm);border:1px solid var(--border);cursor:pointer;transition:all .2s}
+.bulk-opt:hover{background:var(--surface2);border-color:var(--border2);transform:translateY(-1px)}
+.bulk-opt-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.bulk-opt-title{font-size:14px;font-weight:600;margin-bottom:2px}
+.bulk-opt-desc{font-size:12px;color:var(--text3)}
+.bulk-summary{display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.bulk-summary .bs{padding:6px 14px;border-radius:var(--radius-xs);font-size:12px;font-weight:600}
+.bulk-summary .bs-total{background:var(--primary-soft);color:var(--accent)}
+.bulk-summary .bs-new{background:var(--success-soft);color:var(--success)}
+.bulk-summary .bs-dup{background:var(--warn-soft);color:var(--warn)}
+.bulk-summary .bs-err{background:var(--danger-soft);color:var(--danger)}
+.bulk-actions-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px}
+.bulk-check-all{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text2);cursor:pointer}
+.bulk-check-all input{accent-color:var(--primary);width:auto}
+.bulk-table-wrap{max-height:400px;overflow:auto;border:1px solid var(--border);border-radius:var(--radius-sm)}
+.bulk-table{width:100%;border-collapse:collapse;font-size:12px}
+.bulk-table th{padding:8px 10px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--text3);font-weight:600;background:var(--surface2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:1;text-align:left;white-space:nowrap}
+.bulk-table td{padding:7px 10px;border-bottom:1px solid rgba(42,42,58,.4);white-space:nowrap;max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.bulk-table tr:hover td{background:rgba(124,58,237,.03)}
+.bulk-table input[type=checkbox]{accent-color:var(--primary);width:auto}
+.bulk-row-new{}.bulk-row-dup td{background:rgba(245,158,11,.03)}.bulk-row-err td{background:rgba(239,68,68,.03)}
+.bulk-status{font-size:11px;font-weight:600;padding:2px 8px;border-radius:12px;display:inline-block}
+.bulk-status-new{background:var(--success-soft);color:var(--success)}
+.bulk-status-duplicate{background:var(--warn-soft);color:var(--warn)}
+.bulk-status-error{background:var(--danger-soft);color:var(--danger)}
+.bulk-status-update{background:var(--info-soft);color:var(--info)}
+.bulk-status-nochange{background:rgba(107,114,128,.1);color:var(--text3)}
+</style>
+
 <div class="toast-container" id="toasts"></div>
 
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
 <script>
 let TOKEN=localStorage.getItem('seo_token')||'';
 let currentPage=1,categories=[];
-const PP=20;
+let sortBy='id',sortOrder='DESC';
+let bulkMode='upload'; // 'upload' or 'update'
+let bulkPreviewData=[]; // store parsed preview for confirm
+
+function getPerPage(){return parseInt(document.getElementById('per-page-select').value)||20}
 
 (async()=>{
   if(TOKEN){try{const r=await api('/api/sites?page=1&perPage=1');if(r.ok){showApp();return}}catch{}}
@@ -366,12 +595,13 @@ async function api(url,o={}){
 async function doLogin(){
   const u=document.getElementById('l-user').value.trim();
   const p=document.getElementById('l-pass').value;
-  if(!u||!p){showFieldErr('l-err','Please fill in all fields');return}
+  if(!u||!p){showLoginErr('Please fill in all fields');return}
   const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:u,password:p})});
   const d=await r.json();
   if(r.ok){TOKEN=d.token;localStorage.setItem('seo_token',TOKEN);showApp()}
-  else showFieldErr('l-err','Invalid username or password');
+  else showLoginErr('Invalid username or password');
 }
+function showLoginErr(msg){const el=document.getElementById('l-err');el.textContent=msg;el.classList.add('show')}
 document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin()});
 document.getElementById('l-user').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('l-pass').focus()});
 
@@ -409,40 +639,115 @@ function applyCustomCat(){
 function cancelCustomCat(){document.getElementById('custom-cat-wrap').classList.remove('show');document.getElementById('m-custom-cat').value=''}
 
 async function loadStats(){
-  const r=await api('/api/sites?page=1&perPage=1');const d=await r.json();
+  const r=await api('/api/stats');const d=await r.json();
   document.getElementById('stats').innerHTML=`
-    <div class="stat purple"><div class="num">${d.total}</div><div class="label">Total Sites</div></div>
+    <div class="stat purple">
+      <div class="stat-header"><div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div></div>
+      <div class="num">${d.total}</div><div class="label">Total Sites</div>
+    </div>
+    <div class="stat green">
+      <div class="stat-header"><div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div></div>
+      <div class="num">${d.working}</div><div class="label">Working</div>
+    </div>
+    <div class="stat red">
+      <div class="stat-header"><div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div></div>
+      <div class="num">${d.down}</div><div class="label">Down</div>
+    </div>
+    <div class="stat blue">
+      <div class="stat-header"><div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div></div>
+      <div class="num">${d.published}</div><div class="label">Published</div>
+    </div>
+    <div class="stat yellow">
+      <div class="stat-header"><div class="stat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div></div>
+      <div class="num">${d.unpublished}</div><div class="label">Unpublished</div>
+    </div>
   `;
 }
 
 // Sites
 async function loadSites(page){
   if(page)currentPage=page;
-  const s=document.getElementById('search-input').value,c=document.getElementById('cat-filter').value;
-  let url=`/api/sites?page=${currentPage}&perPage=${PP}`;
-  if(s)url+=`&search=${encodeURIComponent(s)}`;if(c)url+=`&category=${encodeURIComponent(c)}`;
+  const s=document.getElementById('search-input').value;
+  const c=document.getElementById('cat-filter').value;
+  const st=document.getElementById('status-filter').value;
+  const pub=document.getElementById('published-filter').value;
+  const pp=getPerPage();
+  let url=`/api/sites?page=${currentPage}&perPage=${pp}&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+  if(s)url+=`&search=${encodeURIComponent(s)}`;
+  if(c)url+=`&category=${encodeURIComponent(c)}`;
+  if(st)url+=`&status=${st}`;
+  if(pub)url+=`&published=${pub}`;
   const r=await api(url);const d=await r.json();
   renderTable(d.sites);renderPager(d.page,d.totalPages,d.total);
 }
-document.getElementById('search-input').addEventListener('keydown',e=>{if(e.key==='Enter')loadSites(1)});
-document.getElementById('cat-filter').addEventListener('change',()=>loadSites(1));
+
+// Debounced search
+let searchTimer;
+document.getElementById('search-input').addEventListener('input',()=>{
+  clearTimeout(searchTimer);
+  searchTimer=setTimeout(()=>{loadSites(1);updateClearBtn()},300);
+});
+document.getElementById('search-input').addEventListener('keydown',e=>{if(e.key==='Enter'){clearTimeout(searchTimer);loadSites(1)}});
+document.getElementById('cat-filter').addEventListener('change',()=>{loadSites(1);updateClearBtn()});
+document.getElementById('status-filter').addEventListener('change',()=>{loadSites(1);updateClearBtn()});
+document.getElementById('published-filter').addEventListener('change',()=>{loadSites(1);updateClearBtn()});
+document.getElementById('per-page-select').addEventListener('change',()=>loadSites(1));
+
+function updateClearBtn(){
+  const s=document.getElementById('search-input').value;
+  const c=document.getElementById('cat-filter').value;
+  const st=document.getElementById('status-filter').value;
+  const pub=document.getElementById('published-filter').value;
+  document.getElementById('clear-filters-btn').style.display=(s||c||st||pub)?'':'none';
+}
+function clearFilters(){
+  document.getElementById('search-input').value='';
+  document.getElementById('cat-filter').value='';
+  document.getElementById('status-filter').value='';
+  document.getElementById('published-filter').value='';
+  document.getElementById('clear-filters-btn').style.display='none';
+  loadSites(1);
+}
+
+// Column sorting
+document.querySelectorAll('th[data-sort]').forEach(th=>{
+  th.addEventListener('click',()=>{
+    const col=th.dataset.sort;
+    if(sortBy===col){sortOrder=sortOrder==='DESC'?'ASC':'DESC'}
+    else{sortBy=col;sortOrder=col==='id'?'DESC':'ASC'}
+    document.querySelectorAll('th').forEach(h=>h.classList.remove('sorted'));
+    th.classList.add('sorted');
+    th.querySelector('.sort-icon').innerHTML=sortOrder==='DESC'?'&#9660;':'&#9650;';
+    loadSites(1);
+  });
+});
 
 function renderTable(sites){
   const tb=document.getElementById('sites-table');
-  if(!sites.length){tb.innerHTML=`<tr><td colspan="12"><div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg><p>No sites found</p><div class="sub">Try adjusting your search or add a new site</div></div></td></tr>`;return}
+  if(!sites.length){
+    tb.innerHTML=`<tr><td colspan="13"><div class="empty-state">
+      <div class="empty-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div>
+      <h3>No sites found</h3><p>Try adjusting your filters or add a new site to get started</p>
+    </div></td></tr>`;
+    return;
+  }
   tb.innerHTML=sites.map(s=>`<tr>
-    <td style="color:var(--text3)">${s.id}</td>
+    <td class="id-cell">${s.id}</td>
     <td class="domain-cell">${esc(s.domain)}</td>
-    <td class="url-cell"><a href="${esc(s.url)}" target="_blank" title="${esc(s.url)}">${esc(s.url)}</a></td>
-    <td><span class="pill pill-blue">${esc(s.category)}</span></td>
-    <td>${s.is_working?'<span class="pill pill-green">Working</span>':'<span class="pill pill-red">Down</span>'}</td>
-    <td>${pill(s.login_works)}</td><td>${pill(s.signup_works)}</td>
-    <td>${pill(s.create_content_works)}</td><td>${pill(s.requires_approval)}</td>
-    <td class="date-cell">${fmtDate(s.created_at)}</td><td class="date-cell">${fmtDate(s.updated_at)}</td>
-    <td><div class="actions-cell" style="justify-content:flex-end">
-      <button class="btn-ghost btn-sm" onclick="viewSite(${s.id})">View</button>
-      <button class="btn-primary btn-sm" onclick="editSite(${s.id})">Edit</button>
-      <button class="btn-danger btn-sm" onclick="confirmDelete(${s.id},'${esc(s.domain)}')">Del</button>
+    <td class="url-cell"><a href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.url)}">${esc(s.url)}</a></td>
+    <td><span class="pill pill-purple">${esc(s.category)}</span></td>
+    <td>${s.is_working?'<span class="pill pill-green"><span class="pill-dot"></span>Working</span>':'<span class="pill pill-red"><span class="pill-dot"></span>Down</span>'}</td>
+    <td>${pill(s.login_works)}</td>
+    <td>${pill(s.signup_works)}</td>
+    <td>${pill(s.create_content_works)}</td>
+    <td>${pill(s.requires_approval)}</td>
+    <td>${publishPill(s.is_published)}</td>
+    <td class="date-cell">${fmtDate(s.created_at)}</td>
+    <td class="date-cell">${fmtDate(s.updated_at)}</td>
+    <td><div class="actions-cell">
+      <button class="act-btn" onclick="viewSite(${s.id})" title="View"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      <button class="act-btn" onclick="editSite(${s.id})" title="Edit"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></button>
+      <button class="act-btn danger" onclick="confirmDelete(${s.id},'${esc(s.domain)}')" title="Delete"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
     </div></td>
   </tr>`).join('');
 }
@@ -463,7 +768,7 @@ function renderPager(page,total,count){
 // View
 async function viewSite(id){
   const r=await api(`/api/sites/${id}`);const s=await r.json();
-  document.getElementById('view-title').textContent=`${s.domain} #${s.id}`;
+  document.getElementById('view-title').textContent=s.domain;
   let creds='<span style="color:var(--text3)">None</span>';
   if(s.credentials){
     try{const p=JSON.parse(s.credentials);creds='<div class="cred-display">'+Object.entries(p).map(([k,v])=>`<div class="cred-item"><span class="cred-key">${esc(k)}</span><span>${esc(v)}</span></div>`).join('')+'</div>'}
@@ -472,12 +777,13 @@ async function viewSite(id){
   document.getElementById('view-content').innerHTML=`<div class="detail-grid">
     <div class="detail-row"><div class="dk">URL</div><div class="dv"><a href="${esc(s.url)}" target="_blank">${esc(s.url)}</a></div></div>
     <div class="detail-row"><div class="dk">Domain</div><div class="dv">${esc(s.domain)}</div></div>
-    <div class="detail-row"><div class="dk">Category</div><div class="dv"><span class="pill pill-blue">${esc(s.category)}</span></div></div>
-    <div class="detail-row"><div class="dk">Working</div><div class="dv">${s.is_working?'<span class="pill pill-green">Yes</span>':'<span class="pill pill-red">No</span>'}</div></div>
+    <div class="detail-row"><div class="dk">Category</div><div class="dv"><span class="pill pill-purple">${esc(s.category)}</span></div></div>
+    <div class="detail-row"><div class="dk">Working</div><div class="dv">${s.is_working?'<span class="pill pill-green"><span class="pill-dot"></span>Yes</span>':'<span class="pill pill-red"><span class="pill-dot"></span>No</span>'}</div></div>
     <div class="detail-row"><div class="dk">Login</div><div class="dv">${pill(s.login_works)}</div></div>
     <div class="detail-row"><div class="dk">Signup</div><div class="dv">${pill(s.signup_works)}</div></div>
-    <div class="detail-row"><div class="dk">Create Content</div><div class="dv">${pill(s.create_content_works)}</div></div>
+    <div class="detail-row"><div class="dk">Content</div><div class="dv">${pill(s.create_content_works)}</div></div>
     <div class="detail-row"><div class="dk">Approval</div><div class="dv">${pill(s.requires_approval)}</div></div>
+    <div class="detail-row"><div class="dk">Published</div><div class="dv">${publishPill(s.is_published)}</div></div>
     <div class="detail-row"><div class="dk">Credentials</div><div class="dv">${creds}</div></div>
     <div class="detail-row"><div class="dk">Notes</div><div class="dv">${esc(s.notes||'-')}</div></div>
     <div class="detail-row"><div class="dk">Created</div><div class="dv">${fmtDate(s.created_at)}</div></div>
@@ -504,10 +810,9 @@ function openAddModal(){
 // Edit
 async function editSite(id){
   const r=await api(`/api/sites/${id}`);const s=await r.json();
-  document.getElementById('modal-title').textContent=`Edit Site #${s.id}`;
+  document.getElementById('modal-title').textContent=`Edit #${s.id}`;
   document.getElementById('m-id').value=s.id;
   document.getElementById('m-url').value=s.url;document.getElementById('m-url').disabled=false;
-  // Ensure category is in list
   const sel=document.getElementById('m-category');
   if(![...sel.options].some(o=>o.value===s.category)){
     const o=document.createElement('option');o.value=s.category;o.textContent=s.category;
@@ -521,7 +826,7 @@ async function editSite(id){
   setToggleVal('m-signup_works',s.signup_works);
   setToggleVal('m-create_content_works',s.create_content_works);
   setToggleVal('m-requires_approval',s.requires_approval);
-  // Parse credentials into rows
+  setToggleVal('m-is_published',s.is_published);
   const cp=document.getElementById('cred-pairs');cp.innerHTML='';
   if(s.credentials){
     try{const p=JSON.parse(s.credentials);Object.entries(p).forEach(([k,v])=>addCredRow(k,v))}
@@ -537,34 +842,28 @@ async function saveSite(){
   const id=document.getElementById('m-id').value;
   const url=document.getElementById('m-url').value.trim();
   const cat=document.getElementById('m-category').value;
-
-  // Validate
   let valid=true;
   if(!url){showFieldErr('m-url-err','URL is required');document.getElementById('m-url').classList.add('error');valid=false}
   else if(!/^(https?:\/\/)?[\w.-]+\.\w{2,}/i.test(url)){showFieldErr('m-url-err','Enter a valid URL');document.getElementById('m-url').classList.add('error');valid=false}
   if(!valid)return;
-
-  // Build credentials JSON from rows
   const creds={};
   document.querySelectorAll('#cred-pairs .cred-row').forEach(row=>{
     const k=row.querySelector('.ck').value.trim();const v=row.querySelector('.cv').value.trim();
     if(k&&v)creds[k]=v;
   });
   const credStr=Object.keys(creds).length?JSON.stringify(creds):null;
-
   const body={
     url,category:cat,
     is_working:hidVal('m-is_working'),login_works:hidVal('m-login_works'),
     signup_works:hidVal('m-signup_works'),create_content_works:hidVal('m-create_content_works'),
-    requires_approval:hidVal('m-requires_approval'),
+    requires_approval:hidVal('m-requires_approval'),is_published:hidVal('m-is_published'),
     credentials:credStr,notes:document.getElementById('m-notes').value.trim()||null,
   };
-
   let r;
   if(id)r=await api(`/api/sites/${id}`,{method:'PUT',body});
   else r=await api('/api/sites',{method:'POST',body});
   const d=await r.json();
-  if(r.ok){closeModal('site-modal');toast(id?'Site updated successfully':'Site added successfully');loadSites();loadStats()}
+  if(r.ok){closeModal('site-modal');toast(id?'Site updated':'Site added');loadSites();loadStats()}
   else toast(d.error||'Something went wrong','error');
 }
 
@@ -613,7 +912,7 @@ function doExport(){
 // Credential rows
 function addCredRow(key,val){
   const div=document.createElement('div');div.className='cred-row';
-  div.innerHTML=`<input class="ck" placeholder="Key (e.g. email)" value="${esc(key||'')}"><input class="cv" placeholder="Value" value="${esc(val||'')}"><button class="btn-ghost btn-sm btn-rm" onclick="this.parentElement.remove()">&times;</button>`;
+  div.innerHTML=`<input class="ck" placeholder="Key (e.g. email)" value="${esc(key||'')}"><input class="cv" placeholder="Value" value="${esc(val||'')}"><button class="btn-rm" onclick="this.parentElement.remove()">&times;</button>`;
   document.getElementById('cred-pairs').appendChild(div);
 }
 
@@ -633,7 +932,7 @@ function setToggleVal(field,val){
 }
 function resetToggles(){
   document.querySelectorAll('.toggles button').forEach(b=>b.className='');
-  ['m-is_working','m-login_works','m-signup_works','m-create_content_works','m-requires_approval'].forEach(f=>document.getElementById(f).value='');
+  ['m-is_working','m-login_works','m-signup_works','m-create_content_works','m-requires_approval','m-is_published'].forEach(f=>document.getElementById(f).value='');
 }
 function hidVal(id){const v=document.getElementById(id).value;return v===''?null:parseInt(v)}
 
@@ -643,6 +942,7 @@ function clearValidation(){document.querySelectorAll('.field-error').forEach(e=>
 
 // Helpers
 function pill(v){if(v===1)return'<span class="pill pill-green">Yes</span>';if(v===0)return'<span class="pill pill-red">No</span>';return'<span class="pill pill-gray">N/A</span>'}
+function publishPill(v){if(v===1)return'<span class="pill pill-blue">Published</span>';if(v===0)return'<span class="pill pill-yellow">Not Yet</span>';return'<span class="pill pill-gray">N/A</span>'}
 function fmtDate(d){if(!d)return'-';return d.replace('T',' ').substring(0,16)}
 function esc(s){if(s==null)return'';const d=document.createElement('div');d.textContent=String(s);return d.innerHTML}
 function openModal(id){document.getElementById(id).classList.add('open')}
@@ -654,9 +954,255 @@ function toast(msg,type='success'){
   c.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transform='translateX(20px)';setTimeout(()=>t.remove(),300)},3000);
 }
 
+// ===== BULK OPERATIONS =====
+function openBulkMenu(){openModal('bulk-menu-modal')}
+
+function downloadUploadTemplate(){
+  window.location.href=`/api/template/upload?token=${TOKEN}`;
+  closeModal('bulk-menu-modal');
+}
+function downloadUpdateTemplate(){
+  window.location.href=`/api/template/update?token=${TOKEN}`;
+  closeModal('bulk-menu-modal');
+}
+
+function triggerBulkUpload(){
+  bulkMode='upload';
+  document.getElementById('bulk-upload-input').value='';
+  document.getElementById('bulk-upload-input').click();
+}
+function triggerBulkUpdate(){
+  bulkMode='update';
+  document.getElementById('bulk-update-input').value='';
+  document.getElementById('bulk-update-input').click();
+}
+
+function handleBulkFile(event,mode){
+  const file=event.target.files[0];
+  if(!file)return;
+  closeModal('bulk-menu-modal');
+  const reader=new FileReader();
+  reader.onload=function(e){
+    try{
+      const wb=XLSX.read(e.target.result,{type:'array'});
+      const ws=wb.Sheets[wb.SheetNames[0]];
+      const rows=XLSX.utils.sheet_to_json(ws,{defval:''});
+      if(!rows.length){toast('File is empty or has no data rows','error');return}
+      if(mode==='upload')previewBulkUpload(rows);
+      else previewBulkUpdate(rows);
+    }catch(err){toast('Failed to parse file: '+err.message,'error')}
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+async function previewBulkUpload(rows){
+  document.getElementById('bulk-review-title').textContent='Review Bulk Upload';
+  document.getElementById('bulk-confirm-text').textContent='Confirm Upload';
+  bulkMode='upload';
+
+  // Normalize column names
+  const normalized=rows.map(r=>{
+    const o={};
+    for(const[k,v]of Object.entries(r)){
+      o[k.trim()]=typeof v==='string'?v.trim():v;
+    }
+    return o;
+  });
+
+  // Send to server for dupe check
+  const resp=await api('/api/bulk-preview',{method:'POST',body:{rows:normalized}});
+  const data=await resp.json();
+  if(!resp.ok){toast(data.error||'Preview failed','error');return}
+
+  bulkPreviewData=data.results;
+  renderBulkUploadReview(data.results);
+  openModal('bulk-review-modal');
+}
+
+function renderBulkUploadReview(results){
+  const newCount=results.filter(r=>r.status==='new').length;
+  const dupCount=results.filter(r=>r.status==='duplicate').length;
+  const errCount=results.filter(r=>r.status==='error').length;
+
+  document.getElementById('bulk-summary').innerHTML=`
+    <span class="bs bs-total">${results.length} Total Rows</span>
+    <span class="bs bs-new">${newCount} New</span>
+    <span class="bs bs-dup">${dupCount} Duplicates</span>
+    ${errCount?`<span class="bs bs-err">${errCount} Errors</span>`:''}
+  `;
+
+  document.getElementById('bulk-thead').innerHTML=`<tr>
+    <th style="width:30px"><input type="checkbox" id="bulk-check-all" checked onchange="toggleAllBulk(this.checked)"></th>
+    <th>Row</th><th>Status</th><th>URL</th><th>Domain</th><th>Category</th>
+    <th>Working</th><th>Login</th><th>Signup</th><th>Content</th><th>Approval</th><th>Published</th><th>Info</th>
+  </tr>`;
+
+  document.getElementById('bulk-tbody').innerHTML=results.map((r,i)=>{
+    const d=r.data;
+    const cls=r.status==='new'?'bulk-row-new':r.status==='duplicate'?'bulk-row-dup':'bulk-row-err';
+    const checked=r.status!=='error'?'checked':'';
+    const disabled=r.status==='error'?'disabled':'';
+    return`<tr class="${cls}">
+      <td><input type="checkbox" class="bulk-cb" data-idx="${i}" ${checked} ${disabled}></td>
+      <td>${r.row}</td>
+      <td><span class="bulk-status bulk-status-${r.status}">${r.status==='new'?'New':r.status==='duplicate'?'Duplicate':'Error'}</span></td>
+      <td title="${esc(r.url||d.URL||'')}">${esc(r.url||d.URL||'').substring(0,40)}</td>
+      <td>${esc(r.domain||'')}</td>
+      <td>${esc(d.Category||d.category||'')}</td>
+      <td>${esc(d.Working||d.is_working||'')}</td>
+      <td>${esc(d['Login Works']||d.login_works||'')}</td>
+      <td>${esc(d['Signup Works']||d.signup_works||'')}</td>
+      <td>${esc(d['Create Content']||d.create_content_works||'')}</td>
+      <td>${esc(d['Requires Approval']||d.requires_approval||'')}</td>
+      <td>${esc(d.Published||d.is_published||'')}</td>
+      <td style="font-size:11px;color:var(--text3)">${esc(r.reason)}</td>
+    </tr>`;
+  }).join('');
+
+  document.querySelector('.bulk-actions-bar').style.display='flex';
+}
+
+function previewBulkUpdate(rows){
+  document.getElementById('bulk-review-title').textContent='Review Bulk Update';
+  document.getElementById('bulk-confirm-text').textContent='Confirm Update';
+  bulkMode='update';
+
+  const normalized=rows.map(r=>{
+    const o={};
+    for(const[k,v]of Object.entries(r)){o[k.trim()]=typeof v==='string'?v.trim():v}
+    return o;
+  });
+
+  // Filter out rows without ID
+  bulkPreviewData=normalized.filter(r=>{
+    const id=parseInt(r.ID||r.id||0);
+    return id>0;
+  }).map((r,i)=>({
+    row:i+2,
+    id:parseInt(r.ID||r.id),
+    status:'update',
+    reason:'Will update',
+    data:r,
+  }));
+
+  if(!bulkPreviewData.length){toast('No rows with valid IDs found','error');return}
+
+  const total=bulkPreviewData.length;
+  document.getElementById('bulk-summary').innerHTML=`
+    <span class="bs bs-total">${total} Rows with IDs</span>
+    <span class="bs" style="background:var(--info-soft);color:var(--info)">${total} Will Update</span>
+  `;
+
+  document.getElementById('bulk-thead').innerHTML=`<tr>
+    <th style="width:30px"><input type="checkbox" id="bulk-check-all" checked onchange="toggleAllBulk(this.checked)"></th>
+    <th>Row</th><th>ID</th><th>URL</th><th>Category</th>
+    <th>Working</th><th>Login</th><th>Signup</th><th>Content</th><th>Approval</th><th>Published</th><th>Notes</th>
+  </tr>`;
+
+  document.getElementById('bulk-tbody').innerHTML=bulkPreviewData.map((r,i)=>{
+    const d=r.data;
+    return`<tr>
+      <td><input type="checkbox" class="bulk-cb" data-idx="${i}" checked></td>
+      <td>${r.row}</td>
+      <td style="font-weight:600">${r.id}</td>
+      <td title="${esc(d.URL||d.url||'')}">${esc((d.URL||d.url||'').substring(0,35))}</td>
+      <td>${esc(d.Category||d.category||'')}</td>
+      <td>${esc(d.Working||d.is_working||'')}</td>
+      <td>${esc(d['Login Works']||d.login_works||'')}</td>
+      <td>${esc(d['Signup Works']||d.signup_works||'')}</td>
+      <td>${esc(d['Create Content']||d.create_content_works||'')}</td>
+      <td>${esc(d['Requires Approval']||d.requires_approval||'')}</td>
+      <td>${esc(d.Published||d.is_published||'')}</td>
+      <td style="max-width:100px">${esc((d.Notes||d.notes||'').substring(0,30))}</td>
+    </tr>`;
+  }).join('');
+
+  document.querySelector('.bulk-actions-bar').style.display='flex';
+  openModal('bulk-review-modal');
+}
+
+function toggleAllBulk(checked){
+  document.querySelectorAll('.bulk-cb:not(:disabled)').forEach(cb=>{cb.checked=checked});
+}
+
+function selectBulkByStatus(status){
+  document.querySelectorAll('.bulk-cb').forEach(cb=>{
+    const idx=parseInt(cb.dataset.idx);
+    const item=bulkPreviewData[idx];
+    if(!item)return;
+    if(cb.disabled)return;
+    cb.checked=(item.status===status);
+  });
+}
+
+async function confirmBulk(){
+  const selected=[];
+  document.querySelectorAll('.bulk-cb:checked').forEach(cb=>{
+    const idx=parseInt(cb.dataset.idx);
+    if(bulkPreviewData[idx])selected.push(bulkPreviewData[idx]);
+  });
+
+  if(!selected.length){toast('No rows selected','error');return}
+
+  const btn=document.getElementById('bulk-confirm-btn');
+  btn.disabled=true;btn.textContent='Processing...';
+
+  try{
+    if(bulkMode==='upload'){
+      const items=selected.map(r=>({
+        url:r.url||r.data.URL||r.data.url,
+        data:{
+          category:r.data.Category||r.data.category||'Blog',
+          is_working:r.data.Working||r.data.is_working||'Yes',
+          login_works:r.data['Login Works']||r.data.login_works||'',
+          signup_works:r.data['Signup Works']||r.data.signup_works||'',
+          create_content_works:r.data['Create Content']||r.data.create_content_works||'',
+          requires_approval:r.data['Requires Approval']||r.data.requires_approval||'',
+          is_published:r.data.Published||r.data.is_published||'',
+          credentials:r.data.Credentials||r.data.credentials||'',
+          notes:r.data.Notes||r.data.notes||'',
+        }
+      }));
+      const resp=await api('/api/bulk-upload',{method:'POST',body:{items}});
+      const data=await resp.json();
+      if(resp.ok){
+        closeModal('bulk-review-modal');
+        toast(`Added ${data.added} sites${data.skipped?' ('+data.skipped+' skipped)':''}`);
+        loadSites();loadStats();
+      }else{toast(data.error||'Upload failed','error')}
+    }else{
+      const items=selected.map(r=>({
+        id:r.id,
+        data:{
+          url:r.data.URL||r.data.url||'',
+          category:r.data.Category||r.data.category||'',
+          is_working:r.data.Working||r.data.is_working||'',
+          login_works:r.data['Login Works']||r.data.login_works||'',
+          signup_works:r.data['Signup Works']||r.data.signup_works||'',
+          create_content_works:r.data['Create Content']||r.data.create_content_works||'',
+          requires_approval:r.data['Requires Approval']||r.data.requires_approval||'',
+          is_published:r.data.Published||r.data.is_published||'',
+          credentials:r.data.Credentials||r.data.credentials||'',
+          notes:r.data.Notes||r.data.notes||'',
+        }
+      }));
+      const resp=await api('/api/bulk-update',{method:'POST',body:{items}});
+      const data=await resp.json();
+      if(resp.ok){
+        closeModal('bulk-review-modal');
+        toast(`Updated ${data.updated} sites${data.skipped?' ('+data.skipped+' skipped)':''}`);
+        loadSites();loadStats();
+      }else{toast(data.error||'Update failed','error')}
+    }
+  }catch(err){toast('Operation failed: '+err.message,'error')}
+  finally{
+    btn.disabled=false;
+    btn.innerHTML=`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> <span id="bulk-confirm-text">${bulkMode==='upload'?'Confirm Upload':'Confirm Update'}</span>`;
+  }
+}
+
 // Close modals on overlay click
 document.querySelectorAll('.overlay').forEach(el=>{el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open')})});
-// Close on Escape
 document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.overlay.open').forEach(el=>el.classList.remove('open'))});
 </script>
 </body>
